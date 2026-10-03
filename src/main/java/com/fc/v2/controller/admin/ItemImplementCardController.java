@@ -44,7 +44,12 @@ public class ItemImplementCardController extends BaseController {
     @RequiresPermissions("item:itemImplementCard:list")
     @ResponseBody
     public ResultTable list(TItemImplementCard record) {
-        QueryWrapper<TItemImplementCard> queryWrapper = new QueryWrapper<TItemImplementCard>();
+        // 明细页与下载同一把尺：页面递来的过滤照带，服务层不另塞条件、不另起分页
+        QueryWrapper<TItemImplementCard> queryWrapper = new QueryWrapper<TItemImplementCard>()
+                .eq(record.getStatus() != null, "status", record.getStatus())
+                .eq(record.getBillNo() != null && !record.getBillNo().trim().isEmpty(),
+                        "bill_no", record.getBillNo() == null ? null : record.getBillNo().trim())
+                .orderByDesc("create_time");
         startPage();
         com.github.pagehelper.PageInfo<TItemImplementCard> page =
                 new com.github.pagehelper.PageInfo<TItemImplementCard>(itemImplementCardService.selectTItemImplementCardList(queryWrapper));

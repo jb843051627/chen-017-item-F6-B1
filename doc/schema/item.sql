@@ -174,3 +174,11 @@ INSERT IGNORE INTO t_sys_permission (id, name, descripion, url, is_blank, pid, p
 VALUES (9100170001, '要素定期核查派单', '季度核查派单台账', '/itemCheckTask/view', 0, 0, 'item:itemCheckTask:view', 1, 'layui-icon-template-1', 17, 0, 'seed', NOW()),
        (9100170002, '派单集合', '派单台账集合', '/itemCheckTask/list', 0, 9100170001, 'item:itemCheckTask:list', 2, NULL, NULL, 0, 'seed', NOW()),
        (9100170003, '开单跑轮撤回重派', '名录一键开单/跑一轮/撤回重派', '/itemCheckTask/runRound', 0, 9100170001, 'item:itemCheckTask:run', 2, 'layui-icon-refresh-3', NULL, 0, 'seed', NOW());
+
+-- 调度凭证：自上线起每半个时辰一轮，段外服务层自然压着；禁并发、漏跑不补。
+-- 每回执行由 AbstractQuartzJob 落 t_sys_quartz_job_log 一条，翻旧账有据可查。
+INSERT IGNORE INTO t_sys_quartz_job
+  (id, job_name, job_group, invoke_target, cron_expression, misfire_policy, concurrent, status, create_by, create_time, remark)
+VALUES
+  (9100170010, '要素定期核查派单轮次', 'ITEM', 'v2Task.checkDispatchRound()', '0 0/30 9-16 * * ?', '3', '1', 0, 'seed', NOW(),
+   '先名录一键开单再跑本轮；开口段外只压着。0正常 1暂停；concurrent=1禁并发');
