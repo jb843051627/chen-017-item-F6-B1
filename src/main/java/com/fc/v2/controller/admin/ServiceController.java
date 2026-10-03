@@ -46,6 +46,8 @@ public class ServiceController extends BaseController {
         List<TSysNotice> sysNotices = sysNoticeService.getNEW();
         List<TSysOperLog> sysOperLog = sysOperLogService.getNEW();
         if (sysNotices == null || sysNotices.size() <= 0) {
+            // 无公告是寻常空情形，接住它：另起一份可写清单，绝不能往 null/空回身上 add
+            sysNotices = new java.util.ArrayList<TSysNotice>();
             TSysNotice sysNotice = new TSysNotice();
             sysNotice.setId(0L);
             sysNotice.setTitle("暂无公告");

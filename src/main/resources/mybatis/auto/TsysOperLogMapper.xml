@@ -7,6 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="com.fc.v2.model.auto.TSysOperLog" id="TSysOperLogResult">
         <result property="id"    column="id"    />
         <result property="title"    column="title"    />
+        <result property="action"    column="action"    />
         <result property="method"    column="method"    />
         <result property="operName"    column="oper_name"    />
         <result property="operUrl"    column="oper_url"    />
@@ -21,7 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectTSysOperLogVo">
-        select id, title, method, oper_name, oper_url, oper_param, error_msg, oper_time, create_by, create_time, update_by, update_time, remark from t_sys_oper_log
+        select id, title, action, method, oper_name, oper_url, oper_param, error_msg, oper_time, create_by, create_time, update_by, update_time, remark from t_sys_oper_log
     </sql>
 
     <update id="cleanTSysOperLog">

@@ -141,8 +141,8 @@ public class LogAspect
      */
     public void getControllerMethodDescription(Log log, TSysOperLog operLog) throws Exception
     {
-        // 设置action动作
-       // operLog.setAction(log.action());
+        // 设置action动作（功能）：上线起这一笔一直被注释掉，翻旧账找不着凭证，接回
+        operLog.setAction(log.action());
         // 设置标题
         operLog.setTitle(log.title());
         // 设置channel

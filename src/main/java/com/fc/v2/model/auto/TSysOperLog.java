@@ -32,6 +32,9 @@ public class TSysOperLog extends BaseEntity
     /** 标题 */
     private String title;
 
+    /** 功能（动作）：注解 @Log(action=...) 落此，翻旧账时凭证就靠这一栏 */
+    private String action;
+
     /** 方法 */
     private String method;
 
@@ -68,6 +71,15 @@ public class TSysOperLog extends BaseEntity
     public String getTitle()
     {
         return title;
+    }
+    public void setAction(String action)
+    {
+        this.action = action;
+    }
+
+    public String getAction()
+    {
+        return action;
     }
     public void setMethod(String method)
     {
@@ -138,6 +150,7 @@ public class TSysOperLog extends BaseEntity
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
             .append("title", getTitle())
+            .append("action", getAction())
             .append("method", getMethod())
             .append("operName", getOperName())
             .append("operUrl", getOperUrl())
